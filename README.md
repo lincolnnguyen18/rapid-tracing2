@@ -5,3 +5,15 @@
 4. Coded frontend then api for login/register functions
 5. Coded frontend then api for upload/library functions
 6. Coded clientside code for drawing and shuffling/cycling through pictures in user's library
+
+# Todo
+[ ] Do Stripe example
+[ ] Upload, library, logout only when stopped; chart, visible when started
+[ ] Lazy load library
+[ ] Mini decaminute
+[ ] Duplicate image hash detection
+[ ] Landing page
+[ ] Internationalization
+[ ] Traffic, accounts dashboard
+[ ] Tutorial video
+[ ] Stripe
