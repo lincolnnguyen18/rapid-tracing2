@@ -19,4 +19,5 @@
 - [ ] Internationalization
 - [ ] Traffic, accounts dashboard
 - [ ] Tutorial video
+- [ ] Common bugs videos
 - [ ] Stripe

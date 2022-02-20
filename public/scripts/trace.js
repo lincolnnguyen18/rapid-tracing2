@@ -14,7 +14,8 @@ const get_time_string_from_seconds = (seconds) => {
 }
 
 const update_picture = () => {
-  const { filename, extension } = shuffled[iteration];
+  const { filename, extension, id } = shuffled[iteration];
+  Cookies.set('last_picture', JSON.stringify(shuffled[iteration]));
   let mode = null;
   switch (current_mode_button) {
     case $original_mode_button:
@@ -101,7 +102,17 @@ $controls_start_button.onclick = () => {
         let new_pictures = shuffled.filter(picture => picture.is_new);
         let old_pictures = shuffled.filter(picture => !picture.is_new);
         shuffled = new_pictures.concat(old_pictures);
-        iteration = 0;
+        let last_picture = Cookies.get('last_picture')
+        console.log(last_picture);
+        if (last_picture !== 'null') {
+          last_picture = JSON.parse(last_picture);
+          const index = shuffled.findIndex(picture => picture.id === last_picture.id);
+          if (index !== -1) {
+            iteration = index;
+          }
+        } else {
+          iteration = 0;
+        }
         $chart_button.classList.remove('disabled');
         $visible_button.classList.remove('disabled');
         console.log(shuffled);
@@ -129,6 +140,7 @@ $controls_start_button.onclick = () => {
     $visible_button.classList.add('disabled');
     clearInterval(timer_interval);
     seconds_since_start = 0;
+    Cookies.set('last_picture', JSON.stringify(null));
   }
 }
 
