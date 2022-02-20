@@ -94,7 +94,7 @@ const get_preview = async (file, size, sigma) => {
       // $upload_dialog_message.innerText = json.error;
       // $upload_dialog_message.classList.remove('hidden');
       $upload_dialog_placeholder.classList.remove('green');
-      $upload_dialog_placeholder_text.innerText = 'Drag and drop a picture here.\nOr click here to select a picture to upload.';
+      $upload_dialog_placeholder_text.innerText = 'Drag and drop a picture here.\nClick here to select a picture to upload.\nPress ctrl/command + v to paste.';
       // setTimeout(() => {
       //   $upload_dialog_message.classList.add('hidden');
       // }, 3000);

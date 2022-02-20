@@ -8,6 +8,7 @@
 
 # Todo
 [ ] Do Stripe example
+[ ] Cache mode images
 [ ] Upload, library, logout only when stopped; chart, visible when started
 [ ] Lazy load library
 [ ] Mini decaminute
