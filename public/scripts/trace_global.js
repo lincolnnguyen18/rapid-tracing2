@@ -26,6 +26,7 @@ window.$library_dialog_window = document.querySelectorAll('#library-dialog-windo
 window.$library_dialog_window_close_button = document.querySelectorAll('#library-dialog-window > div.buttons > span.close-button')[0];
 window.$library_dialog_window_placeholder = document.querySelectorAll('#library-dialog-window > div.placeholder')[0];
 window.$library_dialog_window_images = document.querySelectorAll('#library-dialog-window > div.images')[0];
+window.$library_dialog_delete_button = document.querySelectorAll('#library-dialog-window .delete-button')[0];
 
 window.$chart_dialog = document.querySelectorAll('#timerecord-chart-dialog')[0];
 window.$chart_dialog_window = document.querySelectorAll('#timerecord-chart-dialog-window')[0];

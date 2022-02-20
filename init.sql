@@ -47,8 +47,15 @@ CREATE PROCEDURE add_picture(_filename TEXT, _extension TEXT, _user_id INTEGER) 
   INSERT INTO user_pictures (user_id, picture_id) VALUES (_user_id, LAST_INSERT_ID());
 END//
 
+CREATE PROCEDURE delete_picture(_picture_id INTEGER, _user_id INTEGER) BEGIN
+  SELECT filename FROM pictures WHERE id = _picture_id;
+  DELETE FROM user_pictures WHERE user_id = _user_id AND picture_id = _picture_id;
+  DELETE FROM picture_timerecords WHERE picture_id = _picture_id;
+  DELETE FROM pictures WHERE id = _picture_id;
+END//
+
 CREATE PROCEDURE get_user_pictures(_user_id INTEGER) BEGIN
-  SELECT ISNULL(timerecord_id) as is_new, pictures.id, filename, extension FROM pictures
+  SELECT DISTINCT ISNULL(timerecord_id) as is_new, pictures.id, filename, extension FROM pictures
   JOIN user_pictures ON pictures.id = user_pictures.picture_id
   LEFT JOIN picture_timerecords ON pictures.id = picture_timerecords.picture_id
   WHERE user_pictures.user_id = _user_id

@@ -40,15 +40,18 @@ const get_library = () => {
               $img.classList.add('half-opacity');
               last_library_selection = $img;
               last_library_selection_id = id;
+              $library_dialog_delete_button.classList.remove('disabled');
             } else {
               $img.classList.remove('half-opacity');
               last_library_selection = null;
               last_library_selection_id = null;
+              $library_dialog_delete_button.classList.add('disabled');
             }
           } else {
             $img.classList.add('half-opacity');
             last_library_selection = $img;
             last_library_selection_id = id;
+            $library_dialog_delete_button.classList.remove('disabled');
           }
           console.log(last_library_selection_id);
         });
@@ -69,4 +72,30 @@ $pictures_button.addEventListener('click', () => {
 
 $library_dialog_window_close_button.addEventListener('click', () => {
   close_library_dialog();
+});
+
+// router.post('/delete-picture', isLoggedIn, function (req, res) {
+//   let { picture_id } = req.body;
+//   conn.execute("CALL delete_picture(?, ?)", [picture_id, req.id], function(err, result) {
+//     if (err) {
+//       res.send({ error: 'Could not delete picture.' });
+//     } else {
+//       res.send({ message: 'OK' });
+//     }
+//   });
+// });
+
+$library_dialog_delete_button.addEventListener('click', () => {
+  if (last_library_selection_id) {
+    fetch(`/api/delete-picture`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ picture_id: last_library_selection_id })
+    })
+    .then(res => res.json())
+    .then(json => {
+      console.log(json);
+      get_library();
+    });
+  }
 });

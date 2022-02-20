@@ -129,6 +129,27 @@ router.post('/add-picture', isLoggedIn, function (req, res) {
     }
   });
 });
+
+router.post('/delete-picture', isLoggedIn, function (req, res) {
+  let { picture_id } = req.body;
+  conn.execute("CALL delete_picture(?, ?)", [picture_id, req.id], function(err, result) {
+    if (err || !result || !result[0] || !result[0][0] || !result[0][0].filename) {
+      res.send({ error: 'Could not delete picture.' });
+    } else {
+      const picture_path = `./shared/${req.id}/library/${result[0][0].filename}`;
+      // remove directory recursively
+      fs.rm(picture_path, { recursive: true }, function(err) {
+        if (err) {
+          console.log(err);
+          res.send({ error: 'Could not delete picture.' });
+        } else {
+          res.send({ message: 'OK' });
+        }
+      });
+    }
+  });
+});
+
 /* get user pictures stuff */
 router.get('/get-pictures', isLoggedIn, function (req, res) {
   conn.execute("CALL get_user_pictures(?)", [req.id], function(err, result) {
