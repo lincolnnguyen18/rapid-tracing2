@@ -333,7 +333,7 @@ canvas {
 #timerecord-chart-dialog-window .top-placeholder {
   width: 640px;
   height: 480px;
-  background: #e3e3e3;
+  /* background: #e3e3e3; */
   display: flex;
   align-items: center;
   justify-content: center;

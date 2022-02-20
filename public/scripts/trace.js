@@ -100,6 +100,7 @@ $controls_start_button.onclick = () => {
         shuffled = new_pictures.concat(old_pictures);
         iteration = 0;
         $chart_button.classList.remove('disabled');
+        $visible_button.classList.remove('disabled');
         console.log(shuffled);
         update_right_time();
         update_picture();
@@ -122,6 +123,7 @@ $controls_start_button.onclick = () => {
     $top_region.classList.add('invisible');
     $modes_region.classList.add('invisible');
     $chart_button.classList.add('disabled');
+    $visible_button.classList.add('disabled');
     clearInterval(timer_interval);
     seconds_since_start = 0;
   }
@@ -169,6 +171,10 @@ window.start_timer = () => {
     $progress.value = seconds_since_start / final_seconds * 100;
   }, 1000);
 }
+
+$visible_button.addEventListener('click', () => {
+  $picture.classList.toggle('invisible');
+});
 
 $logout_button.addEventListener('click', () => {
   fetch('/api/logout', {

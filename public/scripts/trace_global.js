@@ -49,6 +49,7 @@ window.$controls_done_button = document.querySelectorAll('#bottom-left > span.do
 window.$upload_button = document.querySelectorAll('#upload-button')[0];
 window.$pictures_button = document.querySelectorAll('#pictures-button')[0];
 window.$chart_button = document.querySelectorAll('#chart-button')[0];
+window.$visible_button = document.querySelectorAll('#visible-button')[0];
 window.$logout_button = document.querySelectorAll('#logout-button')[0];
 
 // document.addEventListener('keydown', (e) => {
