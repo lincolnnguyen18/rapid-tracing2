@@ -29,6 +29,9 @@ const update_picture = () => {
   }
   const path = `/shared/${user_id}/library/${filename}/${mode}.${extension}`;
   $picture.src = path;
+  $picture.onload = () => {
+    $picture.classList.remove('hidden');
+  }
 }
 
 $original_mode_button.onclick = () => {
