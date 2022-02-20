@@ -109,6 +109,7 @@ let last_sigma_interval = null;
 $kernel_size_slider.addEventListener('input', (e) => {
   seconds_since_size_change = 0;
   $upload_dialog_window_image.classList.add('getting-preview');
+  $upload_button.classList.add('disabled');
   if (last_size_interval)
     clearInterval(last_size_interval);
   let interval = setInterval(() => {
@@ -125,6 +126,7 @@ $kernel_size_slider.addEventListener('input', (e) => {
 $kernel_sigma_slider.addEventListener('input', (e) => {
   seconds_since_sigma_change = 0;
   $upload_dialog_window_image.classList.add('getting-preview');
+  $upload_button.classList.add('disabled');
   if (last_sigma_interval)
     clearInterval(last_sigma_interval);
   let interval = setInterval(() => {
@@ -172,6 +174,7 @@ function handleFile(file) {
           $upload_dialog_window_header.classList.remove('hidden');
           $upload_dialog_placeholder.classList.remove('green');
           $upload_dialog_window_image.classList.remove('getting-preview');
+          $upload_button.classList.remove('disabled');
         };
       });
     };
@@ -216,9 +219,11 @@ $upload_dialog_header_modes_original_button.addEventListener('click', () => {
   selected_button = $upload_dialog_header_modes_original_button;
   selected_button.classList.add('selected-mode');
   $upload_dialog_window_image.classList.add('getting-preview');
+  $upload_button.classList.add('disabled');
   $upload_dialog_window_image.src = `/shared/${user_id}/temp/${preview_json.filename}/original.${preview_json.extension}`;
   $upload_dialog_window_image.onload = () => {
     $upload_dialog_window_image.classList.remove('getting-preview');
+    $upload_button.classList.remove('disabled');
   }
 });
 $upload_dialog_header_modes_outline_button.addEventListener('click', () => {
@@ -226,9 +231,11 @@ $upload_dialog_header_modes_outline_button.addEventListener('click', () => {
   selected_button = $upload_dialog_header_modes_outline_button;
   selected_button.classList.add('selected-mode');
   $upload_dialog_window_image.classList.add('getting-preview');
+  $upload_button.classList.add('disabled');
   $upload_dialog_window_image.src = `/shared/${user_id}/temp/${preview_json.filename}/outline.${preview_json.extension}`;
   $upload_dialog_window_image.onload = () => {
     $upload_dialog_window_image.classList.remove('getting-preview');
+    $upload_button.classList.remove('disabled');
   }
 });
 $upload_dialog_header_modes_details_button.addEventListener('click', () => {
@@ -236,14 +243,16 @@ $upload_dialog_header_modes_details_button.addEventListener('click', () => {
   selected_button = $upload_dialog_header_modes_details_button;
   selected_button.classList.add('selected-mode');
   $upload_dialog_window_image.classList.add('getting-preview');
+  $upload_button.classList.add('disabled');
   $upload_dialog_window_image.src = `/shared/${user_id}/temp/${preview_json.filename}/details.${preview_json.extension}`;
   $upload_dialog_window_image.onload = () => {
     $upload_dialog_window_image.classList.remove('getting-preview');
+    $upload_button.classList.remove('disabled');
   }
 });
 window.addEventListener('paste', e => {
   const files = e.clipboardData.files;
-  if (files.length > 0) {
+  if (files.length > 0 && !$upload_dialog.classList.contains('hidden')) {
     handleFile(files[0]);
   }
 });
