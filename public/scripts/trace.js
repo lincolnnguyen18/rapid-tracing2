@@ -73,6 +73,14 @@ const update_right_time = () => {
     }
   });
 }
+
+// CREATE PROCEDURE get_user_pictures(_user_id INTEGER) BEGIN
+//   SELECT ISNULL(timerecord_id) as is_new, pictures.id, filename, extension FROM pictures
+//   JOIN user_pictures ON pictures.id = user_pictures.picture_id
+//   LEFT JOIN picture_timerecords ON pictures.id = picture_timerecords.picture_id
+//   WHERE user_pictures.user_id = _user_id
+//   ORDER BY pictures.id DESC;
+// END//
   
 $controls_start_button.onclick = () => {
   controls_started = !controls_started;
@@ -87,6 +95,9 @@ $controls_start_button.onclick = () => {
     .then(json => {
       if (json.length > 0) {
         shuffled = _.shuffle(json);
+        let new_pictures = shuffled.filter(picture => picture.is_new);
+        let old_pictures = shuffled.filter(picture => !picture.is_new);
+        shuffled = new_pictures.concat(old_pictures);
         iteration = 0;
         $chart_button.classList.remove('disabled');
         console.log(shuffled);
