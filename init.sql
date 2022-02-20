@@ -48,7 +48,11 @@ CREATE PROCEDURE add_picture(_filename TEXT, _extension TEXT, _user_id INTEGER) 
 END//
 
 CREATE PROCEDURE get_user_pictures(_user_id INTEGER) BEGIN
-  SELECT pictures.id, filename, extension FROM pictures JOIN user_pictures ON pictures.id = user_pictures.picture_id WHERE user_pictures.user_id = _user_id ORDER BY pictures.id DESC;
+  SELECT ISNULL(timerecord_id) as is_new, pictures.id, filename, extension FROM pictures
+  JOIN user_pictures ON pictures.id = user_pictures.picture_id
+  LEFT JOIN picture_timerecords ON pictures.id = picture_timerecords.picture_id
+  WHERE user_pictures.user_id = _user_id
+  ORDER BY pictures.id DESC;
 END//
 
 CREATE PROCEDURE get_picture_last_timerecord(_user_id INTEGER, _picture_id INTEGER) BEGIN
