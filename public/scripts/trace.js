@@ -112,7 +112,7 @@ $controls_start_button.onclick = () => {
         if (!paused) {
           seconds_since_start++;
           $left_time.innerHTML = get_time_string_from_seconds(seconds_since_start);
-          console.log(`final_seconds: ${final_seconds}`);
+          // console.log(`final_seconds: ${final_seconds}`);
           if (final_seconds) {
             $progress.value = seconds_since_start / final_seconds * 100;
           }
@@ -171,7 +171,9 @@ window.start_timer = () => {
     seconds_since_start++;
     const padded_seconds = seconds_since_start % 60 < 10 ? '0' + seconds_since_start % 60 : seconds_since_start % 60;
     $left_time.innerHTML = `${Math.floor(seconds_since_start / 60)}:${padded_seconds}`;
-    $progress.value = seconds_since_start / final_seconds * 100;
+    if (final_seconds) {
+      $progress.value = seconds_since_start / final_seconds * 100;
+    }
   }, 1000);
 }
 

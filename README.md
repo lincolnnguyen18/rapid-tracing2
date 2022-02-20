@@ -7,14 +7,16 @@
 6. Coded clientside code for drawing and shuffling/cycling through pictures in user's library
 
 # Todo
-[ ] Do Stripe example
-[ ] Cache mode images
-[ ] Upload, library, logout only when stopped; chart, visible when started
-[ ] Lazy load library
-[ ] Mini decaminute
-[ ] Duplicate image hash detection
-[ ] Landing page
-[ ] Internationalization
-[ ] Traffic, accounts dashboard
-[ ] Tutorial video
-[ ] Stripe
+- [ ] Do Stripe example
+- [ ] Local icons
+- [ ] Hover tooltips
+- [ ] Cache mode images
+- [ ] Upload, library, logout only when stopped; chart, visible when started
+- [ ] Lazy load library
+- [ ] Mini decaminute
+- [ ] Duplicate image hash detection
+- [ ] Landing page
+- [ ] Internationalization
+- [ ] Traffic, accounts dashboard
+- [ ] Tutorial video
+- [ ] Stripe
