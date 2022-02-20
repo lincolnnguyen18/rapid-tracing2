@@ -184,7 +184,7 @@ canvas {
   padding: 0 15px;
 }
 
-#library-dialog .buttons > span {
+#library-dialog .delete-button {
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;

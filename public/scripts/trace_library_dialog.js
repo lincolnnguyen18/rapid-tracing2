@@ -74,17 +74,6 @@ $library_dialog_window_close_button.addEventListener('click', () => {
   close_library_dialog();
 });
 
-// router.post('/delete-picture', isLoggedIn, function (req, res) {
-//   let { picture_id } = req.body;
-//   conn.execute("CALL delete_picture(?, ?)", [picture_id, req.id], function(err, result) {
-//     if (err) {
-//       res.send({ error: 'Could not delete picture.' });
-//     } else {
-//       res.send({ message: 'OK' });
-//     }
-//   });
-// });
-
 $library_dialog_delete_button.addEventListener('click', () => {
   if (last_library_selection_id) {
     fetch(`/api/delete-picture`, {
