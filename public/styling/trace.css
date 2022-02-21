@@ -9,9 +9,9 @@ html, body {
   width: 100%;
 }
 
-html * {
+/* html * {
   touch-action: pan-x pan-y;
-}
+} */
 
 #top, #modes {
   display: flex;
@@ -60,10 +60,15 @@ html * {
 }
 
 canvas {
-  display: block;
-  margin: 0 auto;
-  margin-top: 20px;
-  max-height: 77vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /* margin: 0 auto;
+  margin-top: 20px; */
+  /* max-height: 77vh;
+  max-width: 100%; */
   /* background-color: white; */
 }
 
