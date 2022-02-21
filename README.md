@@ -7,6 +7,7 @@
 6. Coded clientside code for drawing and shuffling/cycling through pictures in user's library
 
 # Todo
+- [ ] Shared state
 - [ ] Real pause button
 - [ ] Easier to reach buttons (visible?)
 - [ ] Do Stripe example
