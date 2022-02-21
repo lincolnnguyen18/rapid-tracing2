@@ -7,7 +7,15 @@
 6. Coded clientside code for drawing and shuffling/cycling through pictures in user's library
 
 # Todo
+<<<<<<< HEAD
 - [ ] Easier to reach buttons (visible?)
+=======
+- [ ] Try react, vue, or other js framework
+- [ ] Record and play back strokes
+- [ ] Levels, easy trace, blind trace, draw
+- [ ] Play with a friend; pool together pictures
+
+>>>>>>> recovered2
 - [ ] Do Stripe example
 - [ ] Local icons
 - [ ] Hover tooltips
