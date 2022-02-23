@@ -193,6 +193,23 @@ $visible_button.addEventListener('click', () => {
   $picture.classList.toggle('invisible');
 });
 
+$account_button.addEventListener('click', () => {
+  fetch('/api/get-total-time-records-for-date', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      date: new Date().toISOString().slice(0, 10)
+    })
+  })
+  .then(res => res.json())
+  .then(json => {
+    const { total_minutes } = json;
+    alert(`You've drawn for ${total_minutes} minutes today.`);
+  });
+});
+
 $logout_button.addEventListener('click', () => {
   fetch('/api/logout', {
     method: 'GET'

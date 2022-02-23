@@ -161,6 +161,22 @@ router.get('/get-pictures', isLoggedIn, function (req, res) {
   });
 });
 
+// get_user_total_time_records_for_date
+router.post('/get-total-time-records-for-date', isLoggedIn, function (req, res) {
+  let { date } = req.body;
+  console.log(date);
+  conn.execute("CALL get_user_total_time_records_for_date(?, ?)", [req.id, date], function(err, result) {
+    console.log(result[0][0].total_minutes);
+    if (err) {
+      res.send({ error: 'Could not get total time records for date.' });
+    } else if (result && result[0] && result[0][0] && result[0][0].total_minutes) {
+      res.send({ total_minutes: parseFloat(result[0][0].total_minutes) });
+    } else {
+      res.send({ total_minutes: 0 });
+    }
+  });
+});
+
 router.get('/get-picture-last-timerecord', isLoggedIn, function (req, res) {
   const { picture_id } = req.query;
   console.log(picture_id);
