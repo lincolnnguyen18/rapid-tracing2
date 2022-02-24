@@ -194,13 +194,18 @@ $visible_button.addEventListener('click', () => {
 });
 
 $account_button.addEventListener('click', () => {
+  // offset by user time zone
+  let date = new Date();
+  // get date string only
+  let fixed = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toJSON().slice(0, 10);
   fetch('/api/get-total-time-records-for-date', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
+    // get current date and format for mysql
     body: JSON.stringify({
-      date: new Date().toISOString().slice(0, 10)
+      date: fixed
     })
   })
   .then(res => res.json())
