@@ -20,6 +20,17 @@ app.use(cookieParser());
 app.use(file_upload());
 app.use(express.static('public'));
 
+const ping = () => {
+  console.log('pinging mysql server; date: ' + new Date());
+  conn.query('SELECT 1');
+}
+
+// ping mysql server to keep connection alive every 10 minutes
+ping();
+setInterval(() => {
+  ping();
+}, 600000);
+
 let temp_files_seconds_since_last_access = {};
 
 const isLoggedIn = (req, res, next) => {
@@ -111,7 +122,7 @@ router.get('/logout', function (req, res) {
 /* add picture to library stuff */
 router.post('/add-picture', isLoggedIn, function (req, res) {
   let { filename, extension } = req.body;
-  console.log(filename, extension);
+  // console.log(filename, extension);
   let old_dir_path = `./shared/${req.id}/temp/${filename}`;
   let new_dir_path = `./shared/${req.id}/library/${filename}`;
   fs.rename(old_dir_path, new_dir_path, function(err) {
@@ -164,9 +175,9 @@ router.get('/get-pictures', isLoggedIn, function (req, res) {
 // get_user_total_time_records_for_date
 router.post('/get-total-time-records-for-date', isLoggedIn, function (req, res) {
   let { date } = req.body;
-  console.log(date);
+  // console.log(date);
   conn.execute("CALL get_user_total_time_records_for_date(?, ?)", [req.id, date], function(err, result) {
-    console.log(result[0][0].total_minutes);
+    // console.log(result[0][0].total_minutes);
     if (err) {
       res.send({ error: 'Could not get total time records for date.' });
     } else if (result && result[0] && result[0][0] && result[0][0].total_minutes) {
@@ -179,7 +190,7 @@ router.post('/get-total-time-records-for-date', isLoggedIn, function (req, res) 
 
 router.get('/get-picture-last-timerecord', isLoggedIn, function (req, res) {
   const { picture_id } = req.query;
-  console.log(picture_id);
+  // console.log(picture_id);
   conn.execute("CALL get_picture_last_timerecord(?, ?)", [req.id, picture_id], function(err, result) {
     if (err) {
       console.log(err);
@@ -208,7 +219,7 @@ router.post('/get-picture-timerecords-chart', isLoggedIn, function (req, res) {
   if (!picture_id) {
     res.send({ error: 'No picture id provided.' });
   } else {
-    console.log('/get-picture-timerecords-chart, req.id:' + req.id);
+    // console.log('/get-picture-timerecords-chart, req.id:' + req.id);
     fetch('http://localhost:3001/get-picture-timerecords-chart', {
       method: 'POST',
       headers: {
@@ -232,10 +243,10 @@ router.post('/get-picture-timerecords-chart', isLoggedIn, function (req, res) {
             delete temp_files_seconds_since_last_access[req.id][temp_name];
           } else {
             temp_files_seconds_since_last_access[req.id][temp_name]++;
-            console.log(`${req.id}, ${temp_name}: ${temp_files_seconds_since_last_access[req.id][temp_name]}`);
+            // console.log(`${req.id}, ${temp_name}: ${temp_files_seconds_since_last_access[req.id][temp_name]}`);
           }
         }, 1000);
-        console.log(data);
+        // console.log(data);
         res.send(data);
       }
     })
@@ -250,10 +261,10 @@ router.post('/get-picture-timerecords-chart', isLoggedIn, function (req, res) {
 router.post('/get-picture-preview', isLoggedIn, (req, res) => {
   const size = req.query.size;
   const sigma = req.query.sigma;
-  console.log('/get-picture-preview called');
+  // console.log('/get-picture-preview called');
   if (req.files && req.files.picture) {
     let file = req.files.picture;
-    console.log(file.mimetype);
+    // console.log(file.mimetype);
     // only allow png, jpeg, and jpg
     if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
       let temp_name = Math.random().toString(36).substring(7)
@@ -282,7 +293,7 @@ router.post('/get-picture-preview', isLoggedIn, (req, res) => {
           })
           .then(res => res.json())
           .then(json => {
-            console.log(json);
+            // console.log(json);
             if (!temp_files_seconds_since_last_access[req.id])
               temp_files_seconds_since_last_access[req.id] = {};
             temp_files_seconds_since_last_access[req.id][temp_name] = 0;
@@ -299,7 +310,7 @@ router.post('/get-picture-preview', isLoggedIn, (req, res) => {
                 delete temp_files_seconds_since_last_access[req.id][temp_name];
               } else {
                 temp_files_seconds_since_last_access[req.id][temp_name]++;
-                console.log(`${req.id}, ${temp_name}: ${temp_files_seconds_since_last_access[req.id][temp_name]}`);
+                // console.log(`${req.id}, ${temp_name}: ${temp_files_seconds_since_last_access[req.id][temp_name]}`);
               }
             }, 1000);
             res.send({ filename: temp_name, extension: extension });
@@ -322,7 +333,7 @@ app.get('/login', isNotLoggedIn, (req, res) => {
   res.sendFile(__dirname + '/pages/login.html');
 });
 app.get("/shared/:id/temp/:filename/:type", isLoggedIn, (req, res) => {
-  console.log(`User with id ${req.id} is trying to access file named '${req.params.filename}' directory with id ${req.params.id}`);
+  // console.log(`User with id ${req.id} is trying to access file named '${req.params.filename}' directory with id ${req.params.id}`);
   if (req.params.id == req.id) {
     temp_files_seconds_since_last_access[req.id][req.params.filename] = 0;
     let path = __dirname + `/shared/${req.params.id}/temp/${req.params.filename}/${req.params.type}`;
@@ -336,7 +347,7 @@ app.get("/shared/:id/temp/:filename/:type", isLoggedIn, (req, res) => {
   }
 });
 app.get("/shared/:id/temp/:tempfile", isLoggedIn, (req, res) => {
-  console.log(`User with id ${req.id} is trying to access file named '${req.params.tempfile}' directory with id ${req.params.id}`);
+  // console.log(`User with id ${req.id} is trying to access file named '${req.params.tempfile}' directory with id ${req.params.id}`);
   if (req.params.id == req.id) {
     let without_extension = req.params.tempfile.substring(0, req.params.tempfile.lastIndexOf('.'));
     temp_files_seconds_since_last_access[req.id][without_extension] = 0;
@@ -351,7 +362,7 @@ app.get("/shared/:id/temp/:tempfile", isLoggedIn, (req, res) => {
   }
 });
 app.get("/shared/:id/library/:filename/:type", isLoggedIn, (req, res) => {
-  console.log(`User with id ${req.id} is trying to access file named '${req.params.filename}' directory with id ${req.params.id}`);
+  // console.log(`User with id ${req.id} is trying to access file named '${req.params.filename}' directory with id ${req.params.id}`);
   if (req.params.id == req.id) {
     let path = __dirname + `/shared/${req.params.id}/library/${req.params.filename}/${req.params.type}`;
     if (fs.existsSync(path)) {
