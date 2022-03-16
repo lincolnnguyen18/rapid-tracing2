@@ -68,6 +68,10 @@ const file_cleared = () => {
 const get_preview = async (file, size, sigma) => {
   const formData = new FormData();
   formData.append('picture', file);
+  // fetch('https://storage.googleapis.com/ln342000-test1/anotherTest.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=admin-30%40crucial-baton-342502.iam.gserviceaccount.com%2F20220226%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20220226T043755Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost&X-Goog-Signature=034c7ffc5e7a14479a3e3ad00c4c2fc131895571b7350438d5d8babdfc51c79f237afb635284e37b44e4037899115fdce12e732931b78c6e3b7a12340f93535a6a9dc59f14a28359850d958843e96014016de808907d13d15f2d56b5dc8d9a810d82533ad46a3ed073c2c5685295047991177ced612d94823354feaba5edf10c32397c8811c9342ba8b81e211103ae2ac8d6523489db11aaaead672034127a5c8f4f355113b508b1e1f6e07f514c61ab4d6b39a7ce4496723b0fc0ce256c29857b8ee37026a3311203df190d6405f8c724c21db62c2113939969edc2f6af0566cc9df856601e89a086ba422bac687c572f048ee67e0cd63490721d2b2a89b0d7', {
+  //   method: 'PUT',
+  //   body: current_file
+  // })
   fetch('/api/get-picture-preview?size=' + size + '&sigma=' + sigma, {
     method: 'POST',
     body: formData
