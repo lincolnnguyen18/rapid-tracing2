@@ -220,7 +220,7 @@ router.post('/get-picture-timerecords-chart', isLoggedIn, function (req, res) {
     res.send({ error: 'No picture id provided.' });
   } else {
     // console.log('/get-picture-timerecords-chart, req.id:' + req.id);
-    fetch('http://localhost:7008/get-picture-timerecords-chart', {
+    fetch('http://localhost:8001/get-picture-timerecords-chart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -280,7 +280,7 @@ router.post('/get-picture-preview', isLoggedIn, (req, res) => {
           console.log(err);
           res.send({ error: 'Error uploading file.' });
         } else {
-          fetch(`http://localhost:7008/get-picture-preview?size=${size}&sigma=${sigma}`, {
+          fetch(`http://localhost:8001/get-picture-preview?size=${size}&sigma=${sigma}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

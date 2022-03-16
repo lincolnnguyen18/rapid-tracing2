@@ -14,16 +14,16 @@ screen -S 'd9' -X stuff "node .\n"
 echo "Checking if node started..."
 lsof -i:$d9
 
-if screen -list | grep -q "d10"; then
-  echo "d10 already started"
+if screen -list | grep -q ""; then
+  echo "e2 already started"
   exit 1
 else
-  echo "starting d10"
+  echo "starting e2"
 fi
 
 # Start node server
-screen -dmS 'd10'
-screen -S 'd10' -X stuff "cd flask && export FLASK_APP=app && export FLASK_ENV=development && python3 -m flask run -h localhost -p 7008\n"
+screen -dmS 'e2'
+screen -S 'e2' -X stuff "cd flask && export FLASK_APP=app && export FLASK_ENV=development && python3 -m flask run -h localhost -p 8001\n"
 
 echo "Checking if node started..."
-lsof -i:$d10
+lsof -i:$e2
