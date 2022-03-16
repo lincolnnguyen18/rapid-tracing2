@@ -14,7 +14,7 @@ screen -S 'd9' -X stuff "node .\n"
 echo "Checking if node started..."
 lsof -i:$d9
 
-if screen -list | grep -q ""; then
+if screen -list | grep -q "e2"; then
   echo "e2 already started"
   exit 1
 else
