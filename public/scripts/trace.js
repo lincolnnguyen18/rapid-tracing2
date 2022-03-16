@@ -104,7 +104,7 @@ $controls_start_button.onclick = () => {
         shuffled = new_pictures.concat(old_pictures);
         let last_picture = Cookies.get('last_picture')
         console.log(last_picture);
-        if (last_picture !== 'null') {
+        if (last_picture && last_picture !== 'null') {
           last_picture = JSON.parse(last_picture);
           const index = shuffled.findIndex(picture => picture.id === last_picture.id);
           if (index !== -1) {
