@@ -25,11 +25,11 @@ const ping = () => {
   conn.query('SELECT 1');
 }
 
-// ping mysql server to keep connection alive every 10 minutes
+// ping mysql server to keep connection alive every 1 minute
 ping();
 setInterval(() => {
   ping();
-}, 600000);
+}, 60000);
 
 let temp_files_seconds_since_last_access = {};
 
