@@ -1,3 +1,4 @@
+require('dotenv').config()
 const mysql = require('mysql2');
 const conn = mysql.createConnection({
   host: 'localhost',
@@ -36,7 +37,7 @@ let temp_files_seconds_since_last_access = {};
 const isLoggedIn = (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
-    jwt.verify(token, 'Ln2121809', (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (!err && decoded.id) {
         conn.execute("select * from users where id = ?", [decoded.id], function(err, rows) {
           if (!err && rows && rows.length > 0 && rows[0]) {
@@ -52,7 +53,7 @@ const isLoggedIn = (req, res, next) => {
 const isNotLoggedIn = (req, res, next) => {
   const token = req.cookies.token;
   if (token) {
-    jwt.verify(token, 'Ln2121809', (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (!err && decoded.id) {
         conn.execute("select * from users where id = ?", [decoded.id], function(err, rows) {
           if (!err && rows && rows.length > 0 &&rows[0]) {
@@ -74,7 +75,7 @@ router.post('/login', function (req, res) {
       let row = rows[0];
       bcrypt.compare(password, row.password, function(err, result) {
         if (!err && result) {
-          let token = jwt.sign({ id: row.id }, 'Ln2121809');
+          let token = jwt.sign({ id: row.id }, process.env.JWT_SECRET);
           res.cookie('token', token, { httpOnly: true, sameSite: 'strict', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) });
           res.cookie('id', row.id, { sameSite: 'strict', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) });
           res.send({ message: 'OK' })
@@ -107,7 +108,7 @@ router.post('/register', function (req, res) {
         fs.mkdirSync(`./shared/${user_id}`);
         fs.mkdirSync(`./shared/${user_id}/temp`);
         fs.mkdirSync(`./shared/${user_id}/library`);
-        let token = jwt.sign({ id: user_id }, 'Ln2121809');
+        let token = jwt.sign({ id: user_id }, process.env.JWT_SECRET);
         res.cookie('token', token, { httpOnly: true, sameSite: 'strict', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) });
         res.cookie('id', user_id, { sameSite: 'strict', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) });
         res.send({ message: 'OK' })
